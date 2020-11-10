@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HummingCodes</title>
+    <title>HammingCodes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/social-circles.min.css')}}">
     {% block head %}{% endblock %}
 </head>
 
@@ -27,10 +28,10 @@
       >
         <div class="pl-4">
           <a
-            class="text-gray-900 text-base no-underline hover:no-underline font-extrabold text-xl"
-            href="#"
+            class="text-gray-900 no-underline hover:no-underline font-extrabold text-xl"
+            href="{{ url_for('index') }}"
           >
-            Minimal Blog
+            Hamming Codes
           </a>
         </div>
 
@@ -66,11 +67,11 @@
             </li>
             <li class="mr-3">
               <a
-                id="Visualise"
+                id="visualize"
                 class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4"
-                href="{{ url_for('visualise') }}"
+                href="{{ url_for('visualize') }}"
               >
-                Visualise
+                visualize
               </a>
             </li>
             <li class="mr-3">
@@ -89,16 +90,17 @@
     {% block body %}{% endblock %}
     </div>
     <footer class="bg-white border-t border-gray-400 shadow">
-      <div class="container max-w-4xl mx-auto flex py-8">
+      <div class="container max-w-6xl mx-auto flex py-8">
         <div class="w-full mx-auto flex flex-wrap">
           <div class="flex w-full md:w-1/2">
             <div class="px-8">
-              <h3 class="font-bold text-gray-900">About</h3>
-              <p class="py-4 text-gray-600 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Maecenas vel mi ut felis tempus commodo nec id erat. Suspendisse
-                consectetur dapibus velit ut lacinia.
-              </p>
+              <h3 class="font-bold text-gray-900">About Me</h3>
+              <div class="flex py-6">
+                <img alt="..." class="h-40 rounded-xl" src="{{ url_for('static', filename='../static/assets/images/my_pic.PNG')}}">
+                <p class="ml-2 text-gray-600 text-sm">
+                  A passionate individual who always thrive to work on end to end products which develop sustainable and scalable social and technical systems to create impact. I love to explore new technologies and leverage it to solve real-life problems. I'm driven by the will to create an impact and encourage diversity and inclusion in communities.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -108,27 +110,27 @@
               <ul class="list-reset items-center text-sm pt-3">
                 <li>
                   <a
-                    class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
-                    href="#"
+                    class="icon-github color inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
+                    href="https://github.com/ritikkumarsahu/"
                   >
-                    Add social link
-                  </a>
+                  Github
+                </a>
                 </li>
                 <li>
                   <a
-                    class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
-                    href="#"
+                    class="icon-linkedin color inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
+                    href="https://www.linkedin.com/in/ritik-sahu-166961167/"
                   >
-                    Add social link
-                  </a>
+                  Linkedin
+                </a>
                 </li>
                 <li>
                   <a
-                    class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
-                    href="#"
+                    class="icon-rss color inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
+                    href="https://ritiksahu.me"
                   >
-                    Add social link
-                  </a>
+                  www.ritiksahu.me
+                </a>
                 </li>
               </ul>
             </div>
@@ -185,8 +187,8 @@
       if (page === ''){
         element = document.getElementById('Index');
       }
-      else if(page === 'visualise'){
-        element = document.getElementById('Visualise')
+      else if(page === 'visualize'){
+        element = document.getElementById('visualize')
       }
 
       element.className = active_class;

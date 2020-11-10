@@ -12,223 +12,180 @@
     >
       <!--Title-->
       <div class="font-sans">
-        <span class="text-base md:text-sm text-teal-500 font-bold">&lt;</span>
-        <a
-          href="#"
-          class="text-base md:text-sm text-teal-500 font-bold no-underline hover:underline"
-        >
-          BACK TO BLOG
-        </a>
         <h1
           class="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-3xl md:text-4xl"
         >
-          Welcome to Minimal Blog
+          Introduction to Hamming Codes
         </h1>
-        <p class="text-sm md:text-base font-normal text-gray-600">
-          Published 19 February 2019
-        </p>
       </div>
 
       <!--Post Content-->
 
       <!--Lead Para-->
       <p class="py-6">
-        👋 Welcome fellow
-        <a
-          class="text-teal-500 no-underline hover:underline"
-          href="https://www.tailwindcss.com"
-        >
-          Tailwind CSS
-        </a>
-        and miminal monochrome blog fan. This starter template provides a
-        starting point to create your own minimal monochrome blog using
-        Tailwind CSS and vanilla Javascript.
+        🤔 Have you ever wondered how it's possible to scratch a CD or DVD and still have it playback whatever it's storing?
       </p>
-
-      <p class="py-6">
-        The basic blog page layout is available and all using the default
-        Tailwind CSS classes (although there are a few hardcoded style tags).
-        If you are going to use this in your project, you will want to convert
-        the classes into components.
-      </p>
-
-      <h1 class="py-2 font-sans">Heading 1</h1>
-      <h2 class="py-2 font-sans">Heading 2</h2>
-      <h3 class="py-2 font-sans">Heading 3</h3>
-      <h4 class="py-2 font-sans">Heading 4</h4>
-      <h5 class="py-2 font-sans">Heading 5</h5>
-      <h6 class="py-2 font-sans">Heading 6</h6>
-
-      <p class="py-6">
-        Sed dignissim lectus ut tincidunt vulputate. Fusce tincidunt lacus
-        purus, in mattis tortor sollicitudin pretium. Phasellus at diam
-        posuere, scelerisque nisl sit amet, tincidunt urna. Cras nisi diam,
-        pulvinar ut molestie eget, eleifend ac magna. Sed at lorem
-        condimentum, dignissim lorem eu, blandit massa. Phasellus eleifend
-        turpis vel erat bibendum scelerisque. Maecenas id risus dictum,
-        rhoncus odio vitae, maximus purus. Etiam efficitur dolor in dolor
-        molestie ornare. Aenean pulvinar diam nec neque tincidunt, vitae
-        molestie quam fermentum. Donec ac pretium diam. Suspendisse sed odio
-        risus. Nunc nec luctus nisi. Class aptent taciti sociosqu ad litora
-        torquent per conubia nostra, per inceptos himenaeos. Duis nec nulla
-        eget sem dictum elementum.
-      </p>
-
-      <ol>
-        <li class="py-3">
-          Maecenas accumsan lacus sit amet elementum porta. Aliquam eu libero
-          lectus. Fusce vehicula dictum mi. In non dolor at sem ullamcorper
-          venenatis ut sed dui. Ut ut est quam. Suspendisse quam quam, commodo
-          sit amet placerat in, interdum a ipsum. Morbi sit amet tellus
-          scelerisque tortor semper posuere.
-        </li>
-        <li class="py-3">
-          Morbi varius posuere blandit. Praesent gravida bibendum neque eget
-          commodo. Duis auctor ornare mauris, eu accumsan odio viverra in.
-          Proin sagittis maximus pharetra. Nullam lorem mauris, faucibus ut
-          odio tempus, ultrices aliquet ex. Nam id quam eget ipsum luctus
-          hendrerit. Ut eros magna, eleifend ac ornare vulputate, pretium nec
-          felis.
-        </li>
-        <li class="py-3">
-          Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-          posuere cubilia Curae; Nunc vitae pretium elit. Cras leo mauris,
-          tristique in risus ac, tristique rutrum velit. Mauris accumsan
-          tempor felis vitae gravida. Cras egestas convallis malesuada. Etiam
-          ac ante id tortor vulputate pretium. Maecenas vel sapien suscipit,
-          elementum odio et, consequat tellus.
-        </li>
-      </ol>
-
+      <div class="flex">
+        <img alt="..." class="shadow-md rounded-full max-w-full h-64 p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/scretched_cd.PNG')}}">
+        <p class="pl-6">
+          The scratch really does affect the 1's and 0's on the disc, so it reads off different data from what was stored, but unless it's really scratched up, the bits it reads are decoded into precisely the same file that was encoded on to it, a bit-for-bit copy, despite all those errors. There's a whole pile of mathematical cleverness that allows us to store data, and just as importantly to transmit it, in a way that's resilient to errors. Well, actually, it doesn't take too much cleverness to come up with a way to do this. Any file, whether it's a video, or sound, or text, code, an image, whatever, is ultimately stored as a sequence of 1's and 0's, and a simple strategy to correct any bit that gets flipped would be to store three copies of each bit. Then the machine reading the file could compare these three copies and always take the best two out of three whenever there's a discrepancy. But what that means is using two thirds of your space for redundancy. And even then, for all that space given up, there's no strong guarantee about what happens if more than 1 bit gets flipped.
+        </p>
+      </div>
+      <div class="max-w-full flex justify-center">
+        <img alt="..." class="shadow-md h-32 p-2 ml-48 mr-3 bg-white" src="{{ url_for('static', filename='../static/assets/images/three_copies.PNG')}}">
+        <img alt="..." class="shadow-md h-32 p-2 ml-3 bg-white" src="{{ url_for('static', filename='../static/assets/images/three_copies_e.PNG')}}">
+      </div>
+      
+      <div class="py-12 flex">
+        <img alt="..." class="shadow-md m-auto max-w-full h-64 p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/256_bit_block.PNG')}}">
+        <p class="pl-6">
+          For example, using the method you'll learn about in this video, you could store your data in 256-bit blocks, where each block uses nine bits –Nine!– to act as a kind of redundancy, the other 247 bits are free to carry whatever meaningful message or data you want. And it will still be the case that if a bit gets flipped, just by looking at this block and nothing more, a machine will be able to identify that there was an error and precisely where it was, so that it knows how to correct it. And honestly, that feels like magic. And for this particular scheme, if two bits get flipped, the machine will at least be able to detect that there were two errors, though it won't know how to fix them. We'll talk later about how this scales for blocks of a different size.
+        </p>
+      </div>
       <blockquote
         class="border-l-4 border-teal-500 italic my-8 pl-8 md:pl-12"
       >
-        Example of blockquote - Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet
-        ligula.
+        Methods that let you correct errors like this are known, reasonably enough, as 
+        <a
+            class="text-teal-500 no-underline hover:underline"
+            href="https://en.wikipedia.org/wiki/Error_correction_code"
+          >
+          "Error correction code."
+          </a>
       </blockquote>
-      <!--/ Post Content-->
-    </div>
+      <img alt="..." class="shadow-md max-w-full m-auto" src="{{ url_for('static', filename='../static/assets/images/error_correction_codes.PNG')}}">
 
-    <!--Tags -->
-    <div class="text-base md:text-sm text-gray-500 px-4 py-6">
-      Tags:
-      <a
-        href="#"
-        class="text-base md:text-sm text-teal-500 no-underline hover:underline"
-      >
-        Link
-      </a>
-      .
-      <a
-        href="#"
-        class="text-base md:text-sm text-teal-500 no-underline hover:underline"
-      >
-        Link
-      </a>
+      <p class="py-6">
+        For the better part of the last century, this field has been a really rich source of surprisingly deep math being incorporated into devices we all use every day. The goal here is to give you a very thorough understanding of one of the earliest examples, known as a Hamming code.
+      </p>
+      
+      <div class="py-6 flex">
+        <p class="py-3">
+          The way I'm thinking about the structure of this article is less about explaining it as directly as possible, and more a matter of prompting you to invent it yourself, with some a little gentle guidance here and there. So when you feel like you see where it's going at some point, take that moment to pause, actively predict what the scheme is going to be before I tell you. Also, if you want that understanding to get down to the hardware level, Ben Eater has made a video in conjunction with this one showing you how to actually implement Hamming codes on breadboards, which is extremely satisfying.
+        </p>
+        <iframe height="215"
+        src="https://www.youtube.com/embed/h0jloehRKas">
+      </iframe>
     </div>
+    
+    
+      <div class="py-6 flex">
+        <img alt="..." class="shadow-md rounded-md max-w-full h-48 mr-3" src="{{ url_for('static', filename='../static/assets/images/richard_hamming.PNG')}}">
+        <p>
+          Coming up with a concrete algorithm to efficiently categorize messages like this, though, take a certain cleverness. The story begins in the 1940s, when a young Richard Hamming was working for Bell Labs and some of his work involved using a very big very expensive punchcard computer that he had only limited access to. And the programs he kept putting through it kept failing because every now and then a bit would get misread. Frustration being the crucible for invention, he got so fed up that he invented error correction codes. There are many different ways to frame Hamming codes, but as a first pass, we're going to go through it the way that Hamming himself thought about them.
+        </p>
+        
+      </div>
 
+      <img alt="..." class="shadow-md m-auto max-w-full h-64 p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/16_bit_block.PNG')}}">
+
+      <p class="py-6">
+        Let's use an example that's simple, but not too simple: A block of 16 bits. We'll number the positions of these bits from 0 up to 15. The actual data we want to store is only going to make up 12 of these bits, while 4 of the positions will be reserved as a kind of redundancy. The word "redundant" here doesn't simply mean copy, after all those four bits don't give us enough room to blindly copy the data. Instead, they'll need to be a much more nuanced and clever kind of redundancy, not adding any new information, but adding resilience. You might expect these four special bits to come nicely packaged together, maybe at the end or something like that, but as you'll see, having them sit in positions which are powers of 2 allows for something that's really elegant by the end. It also might give you a little hint about how this scales for larger blocks. Also, technically it ends up being only 11 bits of data; you'll find there's a mild nuance for what goes on with position 0, but don't worry about that for now.
+      </p>
+      <p class="py-6">
+        Like any error correction algorithm, this will involve two players: A sender who is responsible for setting these four special bits, and then a receiver who is responsible for performing some checks and correcting any errors. Of course, the words "sender" and "receiver" really refer to machines or software that's doing all these checks, and the idea of a message is meant really broadly, to include things like storage. After all, storing data is the thing as sending a message, just from the past to the future instead of from one place to another. So that's the setup, but before we can dive in, we need to talk about a related idea which was fresh on Hamming's mind in the time of his discovery, a method which lets you detect any single-bit error, but not to correct them, known in the business as a 
+        <a
+        class="text-teal-500 no-underline hover:underline"
+        href="https://en.wikipedia.org/wiki/Parity_bit"
+        >
+        "parity check".
+      </a>
+    </p>
+
+    <img alt="..." class="shadow-md m-auto max-w-full h-64 p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/parity_check.PNG')}}">
+    
+    <p class="py-6">
+      For a parity check, we separate out only a single bit that the sender is responsible for tuning, and the rest are free to carry a message. The only job of this special bit is to make sure the total number of 1's in the message is an even number. For example, right now that total number of 1's is 7, that's odd, so the sender needs to flip that special bit to be a 1, making the count even. But if the block had already started off with an even number of 1's, then this special bit would have been kept at a 0. This is pretty simple, deceptively simple, but it's an incredibly elegant way to distill the idea of change anywhere in a message to be reflected in a single bit of information. Notice, if any bit of this message gets flipped, either from 0 to 1 or 1 to 0, it changes the total count of 1's from being even to being odd. So if you're the receiver, you look at this message, and you see an odd number of 1's, you can know, for sure, that some error occurred, even though you might have no idea where it was.
+    </p>
+    <p class="py-6">
+      For example, let's say we do a parity check on just these 8 bits, all the odd-numbered positions. Then if an error is detected, it gives the receiver a little more information about where specifically the error is; namely that it's in an odd position. If no error is detected among those 8 bits, it either means there's no error at all, or it sits somewhere in the even position. To actually set up that parity check, remember, it requires earmarking some special bit that has control for the parity of that full group. Here let's just choose position number 1. So for the example shown, the parity of these 8 bits is currently odd, so the sender is responsible for toggling that parity bit, and now it's even. This is only one out of four parity checks we'll do. The second check is going to be among the 8 bits on the right half of the grid, at least as we've drawn it here. This time, we might use position number 2 as a parity bit. So these 8 bits already have an even parity, and the sender can feel good leaving that bit number 2 unchanged. Then, on the other end, if the receiver checks the parity of this group and they find that it's odd, they'll know that the error is somewhere among these 8 bits on the right. Otherwise, it means either there's no error, or the error is somewhere on the left half. Or I guess there could have been two errors, but for right now we're going to assume that there's at most one error in the entire block; things break down completely for more than that.
+    </p>
+
+    <img alt="..." class="shadow-md m-auto max-w-full h-64 p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/parety_check_16.PNG')}}">
+
+    <p class="py-6">
+      Here, before looking at the next two checks, take a moment to think about what these first two allow us to do when you consider them together. Let's say you detect an error among the odd columns, and among the right half. It necessarily means the error is somewhere in the last column. If there was no error in the odd column, but there was one in the right half, well that tells you it's in the second to last column. Likewise, if there is an error in the odd columns but not the right half, you know that it's somewhere in the second column. And then, if neither of those two parity checks detects anything, it means the only place an error could be is in that leftmost column, but it also might simply mean there's no error at all. Which is all a rather belabored way to say that two parity checks let us pin down the column.</p>
+
+    <p class="py-6">
+      From here, you can probably guess what follows. We do basically the same thing, but for the rows. There's going to be a parity check on the odd rows, using position 4 as a parity bit. So in this example, that group already has even parity, so bit 4 would be set to a 0. And finally there's a parity check on the bottom two rows, using position 8 as a parity bit. In this case, it looks like the sender needs to turn on bit 8 on in order to give that group an even parity.
+    </p>
+
+    <p class="py-6">
+      Just as the first two checks let us pin down the column, these next two let you pin down the row. As an example, imagine that during transmission there's an error at, say position 3. Well, this affects the first parity group, and it also affects the second parity group, so the receiver knows that there's an error somewhere in that right column. But it doesn't affect the third group, and it doesn't affect the fourth group. And that lets the receiver pinpoint the error up to the first row, which necessarily means position 3, so they can fix the error.
+    </p>
+
+    <img alt="..." class="shadow-md m-auto max-w-full  p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/parety_check_256.PNG')}}">
+
+    <p class="py-6">
+      If we used a block of size 256 bits, for example, in order to pin down a location, you need only 8 yes or no questions to binary search your way down to some specific spot. And remember, each question requires giving up only a single bit to set the appropriate parity check. Everything except for those 8 highlighted parity bits, can be whatever you want it to be, carrying whatever message or data you want. The 8 bits are "redundant" in the sense that they're completely determined by the rest of the message, but it's in a much smarter way than simply copying the message as a whole. And still, for so little given up, you would be able to identify and fix any single bit error. Well…almost.
+    </p>
+
+    <img alt="..." class="shadow-md m-auto max-w-full  p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/parety_check_16_at_bit_0.PNG')}}">
+
+    <p class="py-6">
+      Okay, so, the one problem here is that if none of the four parity checks detect an error, meaning that the specially selected subsets of eights bits all have even parities just like the sender intended, then it either means there was no error at all, or it narrows us down into position 0. You see, with four yes or no questions, we have 16 possible outcomes for our parity checks. And at first, that feels perfect for pinpointing 1 of the 16 positions in the block. But you also need to communicate a 17th outcome, the "no error" condition.
+    </p>
+    
+    <img alt="..." class="shadow-md m-auto max-w-full  p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/15_11_hamming_code.PNG')}}">
+    
+    <p class="py-6">
+      The solution here is actually pretty simple: Just forget about 0th bit entirely. So when we do our four parity checks, and we see that they're all even, it unambiguously means that there is no error. What that means, is that rather than working with a 16-bit block, work with a 15-bit block, where 11 of the bits are free to carry a message, and 4 of them are there for redundancy. And with that, we now have what people in the business would refer to as a 
+      <a
+      class="text-teal-500 no-underline hover:underline"
+      href="http://www.ee.unb.ca/cgi-bin/tervo/polygen2.pl"
+      >
+      "(15, 11) Hamming code".
+    </a>
+  </p>
+  
+  <p class="py-6">
+    That said, it is nice to have block size that's a clean power of 2, and there's a clever way that we can keep that 0th bit around and get it to do a little extra work for us. If we use it as a parity bit across the whole block, it lets us actually detect, even though we can't correct, 2-bit errors.
+  </p>
+  
+  <blockquote
+  class="border-l-4 border-teal-500 italic my-8 pl-8 md:pl-12"
+  >
+  Here's how it works.
+</blockquote>
+
+<div class="flex">
+  <img alt="..." class="shadow-md mr-6 max-w-full  p-2 bg-white" src="{{ url_for('static', filename='../static/assets/images/extended_hamming_code.PNG')}}">
+
+  <p class="py-6">
+    After setting those four special error-correcting bits, we set that 0th bit so that the parity of the full block is even, just like a normal parity check. Now if there's a single-bit error, then the parity of the full block toggles to be odd, but we would catch that anyway thanks to our four error-correcting checks. However, if there are two errors, then the overall parity is going to toggle back to being even, but the receiver will still see that there's been at least some error because of what's going on with the four usual parity checks. So if they notice an even parity overall, but something nonzero happening with the other checks, it tells them there were at least two errors. Even though we can't correct those two-bit errors, just by putting that one little bothersome 0th bit to work, it lets us detect them. This is pretty standard, it's known as an 
+    <a
+    class="text-teal-500 no-underline hover:underline"
+        href="https://en.wikipedia.org/wiki/Hamming_code"
+        >
+        "extended" hamming code.
+      </a>
+    </p>
+</div>
+  
+  <p class="py-6">
+    Technically speaking, you now have a full description of what a Hamming code does, at least for the example of a 16-bit block. But I think you'll find it more satisfying to check your understanding and solidify everything up to this point by visualizing it.
+  </p>
+  <!--/ Post Content-->
+</div>
     <!--Divider-->
     <hr class="border-b-2 border-gray-400 mb-8 mx-4" />
 
     <!--Subscribe-->
-    <div class="container px-4">
+    <div class="container px-4 py-4">
       <div class="font-sans bg-white rounded-lg shadow-md p-4 text-center">
         <h2 class="font-bold break-normal text-xl md:text-3xl">
-          Subscribe to my Newsletter
+          Visualize Hamming Code
         </h2>
-        <h3
-          class="font-bold break-normal font-normal text-gray-600 text-sm md:text-base"
-        >
-          Get the latest posts delivered right to your inbox
-        </h3>
         <div class="w-full text-center pt-4">
-          <form action="#">
-            <div
-              class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center"
-            >
-              <input
-                type="email"
-                placeholder="youremail@example.com"
-                class="flex-1 mt-4 appearance-none border border-gray-400 rounded shadow-md p-3 text-gray-600 mr-2 focus:outline-none"
-              />
-              <button
-                type="submit"
-                class="flex-1 mt-4 block md:inline-block appearance-none bg-teal-500 text-white text-base font-semibold tracking-wider uppercase py-4 rounded shadow hover:bg-teal-400"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form>
+        <a href="{{ url_for('visualize') }}"
+          class="flex-1 mt-4 block md:inline-block appearance-none bg-teal-500 text-white text-base font-semibold tracking-wider uppercase p-4 rounded shadow hover:bg-teal-400"
+        >
+          Visualize
+        </a>
+
         </div>
       </div>
     </div>
     <!-- /Subscribe-->
-
-    <!--Author-->
-    <div class="flex w-full items-center font-sans px-4 py-12">
-      <img
-        class="w-10 h-10 rounded-full mr-4"
-        src="http://i.pravatar.cc/300"
-        alt="Avatar of Author"
-      />
-      <div class="flex-1 px-2">
-        <p class="text-base font-bold text-base md:text-xl leading-none mb-2">
-          Jo Bloggerson
-        </p>
-        <p class="text-gray-600 text-xs md:text-base">
-          Minimal Blog Tailwind CSS template by
-          <a
-            class="text-teal-500 no-underline hover:underline"
-            href="https://www.tailwindtoolbox.com"
-            >TailwindToolbox.com</a
-          >
-        </p>
-      </div>
-      <div class="justify-end">
-        <button
-          class="bg-transparent border border-gray-500 hover:border-teal-500 text-xs text-gray-500 hover:text-teal-500 font-bold py-2 px-4 rounded-full"
-        >
-          Read More
-        </button>
-      </div>
-    </div>
-    <!--/Author-->
-
-    <!--Divider-->
-    <hr class="border-b-2 border-gray-400 mb-8 mx-4" />
-
-    <!--Next & Prev Links-->
-    <div class="font-sans flex justify-between content-center px-4 pb-12">
-      <div class="text-left">
-        <span class="text-xs md:text-sm font-normal text-gray-600"
-          >&lt; Previous Post</span
-        ><br />
-        <p>
-          <a
-            href="#"
-            class="break-normal text-base md:text-sm text-teal-500 font-bold no-underline hover:underline"
-          >
-            Blog title
-          </a>
-        </p>
-      </div>
-      <div class="text-right">
-        <span class="text-xs md:text-sm font-normal text-gray-600">
-          Next Post &gt;
-        </span>
-        <br />
-        <p>
-          <a
-            href="#"
-            class="break-normal text-base md:text-sm text-teal-500 font-bold no-underline hover:underline"
-          >
-            Blog title
-          </a>
-        </p>
-      </div>
-    </div>
-
-    <!--/Next & Prev Links-->
   <!--/container-->
 {% endblock %}

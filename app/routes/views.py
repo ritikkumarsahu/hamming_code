@@ -5,6 +5,6 @@ from app import app
 def index():
     return render_template('index.html')
 
-@app.route('/visualise')
-def visualise():
-    return render_template('visualise.html')
+@app.route('/visualize')
+def visualize():
+    return render_template('visualize.html')
