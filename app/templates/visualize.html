@@ -30,11 +30,13 @@
         Random Data
       </a>
     </div>
-    <div class="my-6 break-all">
+    <div class="my-6 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline resize-none">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="decoded_data">
         Decoded Data
       </label>
-      <fieldset contenteditable='false' class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline resize-none" id="decoded_data">
+      <ul class="list-disc ml-10" id="decoded_data">
+        <!-- <li class=" text-blue-600 font-bold">0000000000</li> -->
+      </ul>
       
       </fieldset>
     </div>
@@ -48,6 +50,9 @@
 
 </div>
 <script>
+  var bin= 0;
+  const grid_size = 4;
+  var decoded_data_list = [];
   document.getElementById("go_btn").addEventListener("click", populateData);
 
   function checkParity(){
@@ -72,13 +77,14 @@
       
       var text2 = document.createElement('h2');
       text2.setAttribute('class',"text-xs");
-      $.ajax({
-        type: "POST",
-        url: "/get_bin",
-        data: { data: (i*grid_size + j).toString(), grid_size: grid_size },
-        dataType: "text",
-        async:false
-      }).done(function(res) {
+
+      fetch('/get_bin', {
+        method: 'post',
+        body: JSON.stringify({ data: (i*grid_size + j).toString(), grid_size: grid_size.toString()})
+      }).then(function(response) {
+        return response.json();
+      }).then(function(res) {
+        console.log(i, res)
         text2.setAttribute('id',res);
         text2.innerHTML = res
       });
@@ -94,53 +100,37 @@
   function fillDecodedData(result){
     decoded_data = "";
     var i = 0;
-    var decoded_data_list = [];
     while(i < result.length){
       str = result.slice(i,i+11 < result.length ? i+11: result.length)
       decoded_data_list.push(str);
-      decoded_data += `<span id="decoded_data_focus_`+ i +`" class="text-blue-600 shadow-xs font-bold px-1 mx-1">` +
+      decoded_data += `<li id="decoded_data_focus_`+ i +`">` +
                       str + 
-                      `</span>`
+                      `</li>`
       i += 11;
     }
     
     document.getElementById("decoded_data").innerHTML = decoded_data;
-    return decoded_data_list
+    create_table(decoded_data_list[0],grid_size);
   }
 
   function populateData(){
     const input_data = document.getElementById("input_data").value;
-    const grid_size = 4;
     var decoded_data = "";
-    $.ajax({
-        type: "POST",
-        url: "/get_bin",
-        data: { data: input_data},
-        dataType: "text",
-        async: false
-      }).done(function(res) {
-        // calculate grid size based on given input
-        result = res.replaceAll(" ","");
-        index = Math.floor(Math.random() * result.length);
-        data_list = fillDecodedData(result);
-        var count = Math.min(index, result.length-11);
 
-        console.log(index, count,result.length)
-        for (var i=0;i<16;i++){
-          if (Number.isInteger(Math.log2(i)) || i == 0 ){
-            decoded_data += 'p'
-            continue
-          }
-          decoded_data += result[count++];
-        }
+    fetch('/get_bin', {
+      method: 'post',
+      body: JSON.stringify({ data: input_data.toString()})
+    }).then(function(response) {
+      return response.json();
+    }).then(function(res) {
+      console.log(res)
+      bin = res['bin_num'];
+      result = bin.replaceAll(" ","");
+      console.log(result)
+      fillDecodedData(result)
+    });
 
-        if (!decoded_data){
-          console.log("error getting decoded data" , decoded_data)
-          return null;
-        }
-
-        create_table(decoded_data, grid_size);
-  });
+    
 }
   
 </script>
