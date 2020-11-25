@@ -2,7 +2,6 @@
 
 {% block head %}
   <title>Home</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='../static/script/utils.js')}}"></script>
 {% endblock %}
 
@@ -15,44 +14,62 @@
 
 
 <div class="bg-gray-900 mb-6 shadow-md rounded flex" style="height: 618px;">
-  <div class="bg-white max-w-xs shadow-md rounded px-8 pt-6 pb-8 mb-4 md:w-1/2 h-full">
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="input_data">
-        Input Data
+  <div class="w-1/4">
+    <div class="bg-white max-w-xs shadow-md rounded px-8 pt-6 pb-8 mb-4 h-full">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="input_data">
+          Input Message
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="input_data" type="text" placeholder="Type Hi" maxlength=32>
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline" id="go_btn">
+          Go
+        </button>
+        <button class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" onclick="document.getElementById('input_data').value = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);">
+          Random Message
+        </a>
+      </div>
+      <div class="my-6 shadow max-h-64 h-64 appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline resize-none overflow-x-auto">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="decoded_data">
+          Decoded Message
+        </label>
+        <ul class="list-disc ml-10" id="decoded_data">
+          <!-- <li class=" text-blue-600 font-bold">0000000000</li> -->
+        </ul>
+      </div>
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="output_data">
+        Output Message
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="input_data" type="text" placeholder="Type Hi" maxlength=32>
-    </div>
-    <div class="flex items-center justify-between">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline" id="go_btn">
-        Go
-      </button>
-      <button class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" id="random_data_btn">
-        Random Data
-      </a>
-    </div>
-    <div class="my-6 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline resize-none">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="decoded_data">
-        Decoded Data
-      </label>
-      <ul class="list-disc ml-10" id="decoded_data">
-        <!-- <li class=" text-blue-600 font-bold">0000000000</li> -->
-      </ul>
-      
-      </fieldset>
+      <div id="output_data" class="shadow appearance-none border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight break-all">
+      </div>
     </div>
   </div>
-    <!--grid-->
-    <!-- {% set grid_len = 16 %}
-    {% set grid_size = calc_log(grid_len)|int %} -->
-  <table class="table-fixed text-white bg-gray-500 my-6 mx-auto max-w-sm" id = "grid">
-  </table>
-    <!--/grid-->
 
+  <div class="w-3/4">
+    <div class="border border-white bg-white text-black font-bold h-12 rounded-xl px-4 pt-2 m-1 transition duration-1000 ease select-none focus:outline-none focus:shadow-outline animate-pulse">
+      <!-- <div class="border border-orange-500 bg-orange-500 text-white rounded-md px-4 py-2 m-2 w-16">
+        Tip :
+      </div> -->
+      Tip: shchciohs ccskcb sjcbscisic sjgcuguguggigig.
+      <button
+        type="button"
+        class="border border-indigo-500 bg-indigo-500 text-white rounded-xl px-4 py-1 float-right transition duration-500 ease select-none focus:outline-none focus:shadow-outline"
+        onclick="this.parentNode.classList.remove('animate-pulse');"
+      >
+        Stop Blinking
+      </button>
+    </div>
+  
+    <table class="table-fixed text-white bg-gray-700 my-6 mx-auto max-w-sm" id = "grid">
+    </table>
+  </div>
 </div>
 <script>
   var bin= 0;
   const grid_size = 4;
   var decoded_data_list = [];
+  var grid_index = 0;
   document.getElementById("go_btn").addEventListener("click", populateData);
 
   function checkParity(){
@@ -60,6 +77,7 @@
   }
   
   function create_table(data,grid_size){
+    data = data.length == 11 ? data:"0".repeat(11-data.length) + data ;
     var table = document.getElementById('grid');
     count = 0;
     // clearing previous table
@@ -74,53 +92,104 @@
       
       var text1 = document.createElement('h1');
       text1.setAttribute('class',"text-2xl");
+      text1.setAttribute('id','bit_num_'+(i*grid_size + j).toString());
       if (Number.isInteger(Math.log2(i*grid_size+j)) || i+j == 0 ){
         text1.innerHTML = '?';
+        td.classList.add('bg-gray-500')
       }
-        else{
+      else{
+          td.classList.add('hover:bg-indigo-600', 'transition', 'duration-500', 'ease', 'cursor-pointer');
+          text1.addEventListener('click',function(event){
+            var Element = event.target || event.srcElement;
+            prevBit =  Element.innerHTML;
+            Element.innerHTML = prevBit == '0' ? '1' : '0';
+            // change bin
+          });
           text1.innerHTML = data[count++];
       }
       
       var text2 = document.createElement('h2');
       text2.setAttribute('class',"text-xs");
       text2.setAttribute('id','bin_num_'+(i*grid_size + j).toString());
-
-      fetch('/get_bin', {
-        method: 'post',
-        body: JSON.stringify({ data: (i*grid_size + j).toString(), grid_size: grid_size.toString()})
-      }).then(function(response) {
-        return response.json();
-      }).then(function(res) {
-        text = document.getElementById('bin_num_'+(res['num']).toString())
-        text.setAttribute('id',res['bin_num']);
-        text.innerHTML = res['bin_num']
-      });
-
       td.appendChild(text1);
       td.appendChild(text2);
       tr.appendChild(td);
     }
     table.appendChild(tr);
+
+    for (k = 0 ; k < grid_size; k++){
+      fetch('/get_bin', {
+        method: 'post',
+        body: JSON.stringify({ data: (i*grid_size + k).toString(), grid_size: grid_size.toString()})
+      }).then(function(response) {
+        return response.json();
+      }).then(function(res) {
+          text1 = document.getElementById('bit_num_'+(res['num']).toString())
+          text2 = document.getElementById('bin_num_'+(res['num']).toString())
+          text1.setAttribute('id',res['bin_num']);
+          text2.innerHTML = res['bin_num']
+        });
+      }
     }
   }
 
   function fillDecodedData(result){
     decoded_data = "";
     var i = 0;
+    count = 0;
     while(i < result.length){
       str = result.slice(i,i+11 < result.length ? i+11: result.length)
       decoded_data_list.push(str);
-      decoded_data += `<li id="decoded_data_focus_`+ i +`">` +
+      decoded_data += `<li id="decoded_data_focus_`+ count +`" class="border border-indigo-500 rounded-md px-1 py-1 m-2 transition duration-500 ease select-none hover:bg-green-400 focus:outline-none focus:shadow-outline"">` +
                       str + 
                       `</li>`
       i += 11;
+      count++;
     }
-    
+
     document.getElementById("decoded_data").innerHTML = decoded_data;
-    create_table(decoded_data_list[0],grid_size);
+      
+    for (j=0;j<count;j++){
+      list_ele = document.getElementById("decoded_data_focus_"+j.toString())
+
+      list_ele.addEventListener("click", function(){ 
+        grid_index = this.id[this.id.length-1];
+        for (k=0;k<decoded_data_list.length;k++){
+          document.getElementById("decoded_data_focus_"+k.toString()).classList.remove('bg-green-400');
+        }
+        this.classList.add('bg-green-400');
+        create_table(decoded_data_list[grid_index],grid_size); });
+    }
+    grid_index = 0;
+    document.getElementById("decoded_data_focus_"+grid_index.toString()).classList.add('bg-green-400');
+    create_table(decoded_data_list[grid_index],grid_size);
+  }
+
+  function getOutputMsg(){
+    bin_array = bin.split(" ");
+    decoded_bin_array = [];
+    count = 0;
+    decoded_data_str = decoded_data_list.join('');
+    
+    for (i=0;i<bin_array.length;i++) {
+      decoded_bin_array.push(decoded_data_str.slice(count,count + bin_array[i].length))
+      count += bin_array[i].length 
+    }
+
+    fetch('/bin2str', {
+      method: 'post',
+      body: JSON.stringify({ data: decoded_bin_array.join(' ')})
+    }).then(function(response) {
+      return response.json();
+    }).then(function(res) {
+      document.getElementById('output_data').innerHTML = res['string'];
+    });
   }
 
   function populateData(){
+    bin= 0;
+    decoded_data_list = [];
+    grid_index = 0;
     const input_data = document.getElementById("input_data").value;
     var decoded_data = "";
 
@@ -133,6 +202,7 @@
       bin = res['bin_num'];
       result = bin.replaceAll(" ","");
       fillDecodedData(result)
+      getOutputMsg();
     });
 
     

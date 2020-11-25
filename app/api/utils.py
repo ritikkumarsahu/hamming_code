@@ -7,13 +7,17 @@ import json
 def get_bin(num=None):
     if request.method == "POST":
         data = json.loads(request.data)
-        print(data)
         num = data.get("data")
         grid_size = data.get("grid_size")
         if grid_size:
             return find_bin(int(num), int(grid_size))
         return find_bin(num)
     return num
+
+@app.route('/bin2str', methods=['POST'])
+def bin2str():
+    bin = json.loads(request.data)['data']
+    return {'string':"".join(map(lambda x: chr(int(x,2)), bin.split()))}
 
 @app.context_processor
 def calc_log():
@@ -32,6 +36,3 @@ def find_bin (num, grid_size = None):
         return {'bin_num' : bin_num if len(bin_num) >= grid_size else '0' * (grid_size - len(bin_num)) + bin_num, 'num':num}
     else:
         return {'bin_num':' '.join(format(i, 'b') for i in bytearray(num, encoding ='utf-8'))} 
-
-def bin2str(bin):
-    return {'string':"".join(map(lambda x: chr(int(x,2)), bin.split()))}
