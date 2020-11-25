@@ -29,7 +29,7 @@ def calc_bin():
 def find_bin (num, grid_size = None):
     if grid_size:
         bin_num = bin(num)[2:]
-        return {'bin_num' : bin_num if len(bin_num) >= grid_size else '0' * (grid_size - len(bin_num)) + bin_num}
+        return {'bin_num' : bin_num if len(bin_num) >= grid_size else '0' * (grid_size - len(bin_num)) + bin_num, 'num':num}
     else:
         return {'bin_num':' '.join(format(i, 'b') for i in bytearray(num, encoding ='utf-8'))} 
 

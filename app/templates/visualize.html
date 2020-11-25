@@ -61,6 +61,7 @@
   
   function create_table(data,grid_size){
     var table = document.getElementById('grid');
+    count = 0;
     // clearing previous table
     table.innerHTML = "";
     for (var i = 0; i < grid_size; i++){
@@ -73,10 +74,16 @@
       
       var text1 = document.createElement('h1');
       text1.setAttribute('class',"text-2xl");
-      text1.innerHTML = data[i*grid_size+j]
+      if (Number.isInteger(Math.log2(i*grid_size+j)) || i+j == 0 ){
+        text1.innerHTML = '?';
+      }
+        else{
+          text1.innerHTML = data[count++];
+      }
       
       var text2 = document.createElement('h2');
       text2.setAttribute('class',"text-xs");
+      text2.setAttribute('id','bin_num_'+(i*grid_size + j).toString());
 
       fetch('/get_bin', {
         method: 'post',
@@ -84,9 +91,9 @@
       }).then(function(response) {
         return response.json();
       }).then(function(res) {
-        console.log(i, res)
-        text2.setAttribute('id',res);
-        text2.innerHTML = res
+        text = document.getElementById('bin_num_'+(res['num']).toString())
+        text.setAttribute('id',res['bin_num']);
+        text.innerHTML = res['bin_num']
       });
 
       td.appendChild(text1);
@@ -123,10 +130,8 @@
     }).then(function(response) {
       return response.json();
     }).then(function(res) {
-      console.log(res)
       bin = res['bin_num'];
       result = bin.replaceAll(" ","");
-      console.log(result)
       fillDecodedData(result)
     });
 
