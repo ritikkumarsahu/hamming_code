@@ -7,10 +7,11 @@
 
 {% block body %}
 
-<!-- <div class="flex mb-6">
-  <svg height = 618 class="bg-gray-900 text-teal-500 inline-block w-full">
-  </svg>
-</div> -->
+<div class="flex mb-6">
+  <div class="bg-gray-900 text-teal-500 font-extrabold w-full" style="height: 618px;">
+    Fix error that parity bit id is not comming but it is defined
+  </div>
+</div>
 
 
 <div class="bg-gray-900 mb-6 shadow-md rounded flex" style="height: 618px;">
@@ -48,10 +49,7 @@
 
   <div class="w-3/4">
     <div class="border border-white bg-white text-black font-bold h-12 rounded-xl px-4 pt-2 m-1 transition duration-1000 ease select-none focus:outline-none focus:shadow-outline animate-pulse">
-      <!-- <div class="border border-orange-500 bg-orange-500 text-white rounded-md px-4 py-2 m-2 w-16">
-        Tip :
-      </div> -->
-      Tip: shchciohs ccskcb sjcbscisic sjgcuguguggigig.
+     <span id="tips">Tip: shchciohs ccskcb sjcbscisic sjgcuguguggigig.</span>
       <button
         type="button"
         class="border border-indigo-500 bg-indigo-500 text-white rounded-xl px-4 py-1 float-right transition duration-500 ease select-none focus:outline-none focus:shadow-outline"
@@ -63,6 +61,9 @@
   
     <table class="table-fixed text-white bg-gray-700 my-6 mx-auto max-w-sm" id = "grid">
     </table>
+    <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" class="float-left z-50 hidden" style="margin-left: 56vh;" id="next_btn">
+      <image xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAMAAAAL34HQAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACtVBMVEUAAAAAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogAlogRnZAho5cpppsboZUDl4kUnpFmv7av3Njm8vH6+vr1+PjL5+WMzsg3rKEYn5OV0szy9/ZOtaxkvrbu9fWz3toZoJMGmIud1dDj8fAyqp+o2dTs9fSBysPx9vZBsKY7rqP5+voBlojJ5uRLtKqu29cKmoz0+PdAr6VpwLiAycONzsh/ycJnv7c9rqQImYzz9/eq2tVGsqjG5eI1q6D4+fl7x8Cf1tCi19IPnI8tqJ08rqM/r6VCsKbP6ebe7+1yw7zi8e/Z7et0xL2Kzcd5xr9FsacLmo3f7+19yMENm47r9PM4rKFevLPg7+6Lzsft9fQMm40ipJh8x8BRt61St66U0cxHsqgmpZkFmIoJmoy44NyDy8Tb7ewOm47v9vU2rKHl8vECl4mIzcZlvra139sEmIolpZlfvLPY7OpDsaba7evU6+kxqp51xb2l2NPE5OHR6ufM6OW74d2Y081jvrUZoJS239sdopVYubAvqZ0VnpGh1tGOz8mZ085vwruPz8k0q6AAAAAF+avUAAAAZHRSTlMABSJDZIGWqLvO0Nfg1sy6p5R+YUAgBA1GeKbT+/qhdEEKC07P/fzKj0kJHHK+97dsFhRtw/69ZxAB+fagPAhl0VwGDHzp5HPs53AC4ls+xjYSnw5X402c4dxurqMh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" height="150" width="150" id="right-arrow"/>
+    </svg>
   </div>
 </div>
 <script>
@@ -70,10 +71,47 @@
   const grid_size = 4;
   var decoded_data_list = [];
   var grid_index = 0;
+  var canToggle = false;
+  var errorBitAdd = '';
+  var Tips = [
+    'Type any message in the input message and press Go',
+    'count the 1s in the highlighted area (first parity group) in the grid if counted odd parity bit of this group will change to 1',
+    'count the 1s in the highlighted area {second parity group} in the grid if counted odd parity bit of this group will change to 1',
+    'count the 1s in the highlighted area {third parity group} in the grid if counted odd parity bit of this group will change to 1',
+    'count the 1s in the highlighted area {fourth parity group} in the grid if counted odd parity bit of this group will change to 1',
+    'toggle any one non parity bit from the grid to add error in the message',
+  ]
+
+  var tip_index = 0;
+  var parityGroupNo = 3;
+  displayTips()
   document.getElementById("go_btn").addEventListener("click", populateData);
 
   function checkParity(){
-
+    var bits = document.querySelectorAll('h2.text-xs');
+    var one_count = 0;
+    parityBitAdd = '0000'.replaceAt(parityGroupNo, "1");
+    bits.forEach(function(bit,index){
+      bit.parentElement.classList.remove('bg-blue-600')
+      if (bit.innerText[parityGroupNo] == '1'){
+        bit.parentElement.classList.add('bg-blue-600')
+        b = document.getElementById(`${bit.innerText}`)
+        if (b.innerText == '1'){
+          one_count++;
+          console.log(bit.id,one_count)
+        }
+      }
+      console.log(bit, parityBitAdd)
+      b = document.getElementById(`${bit.innerText}`)
+      if (b.id == parityBitAdd){
+        b.innerText = one_count % 2 ? 1 : 0;
+        b.parentElement.classList.replace('bg-blue-600','bg-green-500');
+      }
+    });
+    
+    //parityBit = document.getElementById(`${parityBitAdd}`)
+    //console.log(document.querySelectorAll('h1.text-2xl'))
+    
   }
   
   function create_table(data,grid_size){
@@ -100,10 +138,15 @@
       else{
           td.classList.add('hover:bg-indigo-600', 'transition', 'duration-500', 'ease', 'cursor-pointer');
           text1.addEventListener('click',function(event){
-            var Element = event.target || event.srcElement;
-            prevBit =  Element.innerHTML;
-            Element.innerHTML = prevBit == '0' ? '1' : '0';
-            // change bin
+            if (canToggle){
+              var Element = event.target || event.srcElement;
+              prevBit =  Element.innerHTML;
+              Element.innerHTML = prevBit == '0' ? '1' : '0';
+              Element.classList.replace('bg-blue-600','bg-red-400');
+              errorBitAdd = Element.id;
+              // change bin
+            }
+            canToggle = false;
           });
           text1.innerHTML = data[count++];
       }
@@ -158,11 +201,32 @@
           document.getElementById("decoded_data_focus_"+k.toString()).classList.remove('bg-green-400');
         }
         this.classList.add('bg-green-400');
-        create_table(decoded_data_list[grid_index],grid_size); });
+        create_table(decoded_data_list[grid_index],grid_size); 
+        tip_index = 2;
+        displayTips();
+        var nextBtn = document.getElementById('next_btn');
+        nextBtn.classList.remove('hidden');
+        nextBtn.addEventListener('click',function(){
+          // call parity check
+          if (parityGroupNo > 0 && tip_index < 5){
+            checkParity();
+            parityGroupNo--;
+          }
+          else{
+            canToggle=true;
+          }
+          tip_index++;
+          displayTips()
+        });
+      });
     }
     grid_index = 0;
     document.getElementById("decoded_data_focus_"+grid_index.toString()).classList.add('bg-green-400');
     create_table(decoded_data_list[grid_index],grid_size);
+  }
+
+  function displayTips(){
+    document.getElementById("tips").innerText = Tips[tip_index]
   }
 
   function getOutputMsg(){
@@ -192,6 +256,8 @@
     grid_index = 0;
     const input_data = document.getElementById("input_data").value;
     var decoded_data = "";
+    tip_index = 1
+    displayTips()
 
     fetch('/get_bin', {
       method: 'post',
@@ -203,9 +269,15 @@
       result = bin.replaceAll(" ","");
       fillDecodedData(result)
       getOutputMsg();
+      console.log('checking parity')
+      checkParity();
+      parityGroupNo--;
     });
-
     
+}
+
+String.prototype.replaceAt = function(index, replacement) {
+  return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
   
 </script>
